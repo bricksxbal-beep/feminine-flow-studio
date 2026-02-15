@@ -33,18 +33,6 @@ export const getCurrentCycleDay = (cycleData: CycleData): number => {
   return (daysSinceLastPeriod % cycleData.cycleLength) + 1;
 };
 
-export const calculateDueDate = (pregnancyStartDate: string): Date => {
-  const startDate = new Date(pregnancyStartDate);
-  return addDays(startDate, 280); // 40 weeks
-};
-
-export const getPregnancyWeek = (pregnancyStartDate: string): number => {
-  const startDate = new Date(pregnancyStartDate);
-  const today = new Date();
-  const daysSince = differenceInDays(today, startDate);
-  return Math.floor(daysSince / 7);
-};
-
 export const formatDate = (date: Date): string => {
   return format(date, "dd 'de' MMMM", { locale: ptBR });
 };

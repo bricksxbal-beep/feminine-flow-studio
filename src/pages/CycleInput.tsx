@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Calendar, Droplets, Clock } from 'lucide-react';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
+import bgCalendar from '@/assets/bg-calendar.jpg';
 
 const CycleInput = () => {
   const navigate = useNavigate();
@@ -32,8 +33,13 @@ const CycleInput = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-soft pb-20">
-      <div className="max-w-md mx-auto px-6 py-8">
+    <div className="min-h-screen pb-20 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgCalendar} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+      </div>
+
+      <div className="relative z-10 max-w-md mx-auto px-6 py-8">
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Configure seu Ciclo
@@ -44,7 +50,7 @@ const CycleInput = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6 animate-slide-up">
-          <Card className="p-6 shadow-card border-border">
+          <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
             <div className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="lastPeriod" className="flex items-center gap-2 text-foreground">
@@ -55,10 +61,8 @@ const CycleInput = () => {
                   id="lastPeriod"
                   type="date"
                   value={formData.lastPeriodDate}
-                  onChange={(e) =>
-                    setFormData({ ...formData, lastPeriodDate: e.target.value })
-                  }
-                  className="border-border"
+                  onChange={(e) => setFormData({ ...formData, lastPeriodDate: e.target.value })}
+                  className="border-0 bg-muted/50"
                   required
                 />
               </div>
@@ -74,15 +78,11 @@ const CycleInput = () => {
                   min="21"
                   max="45"
                   value={formData.cycleLength}
-                  onChange={(e) =>
-                    setFormData({ ...formData, cycleLength: parseInt(e.target.value) })
-                  }
-                  className="border-border"
+                  onChange={(e) => setFormData({ ...formData, cycleLength: parseInt(e.target.value) })}
+                  className="border-0 bg-muted/50"
                   required
                 />
-                <p className="text-xs text-muted-foreground">
-                  Média: 28 dias (intervalo entre ciclos)
-                </p>
+                <p className="text-xs text-muted-foreground">Média: 28 dias</p>
               </div>
 
               <div className="space-y-2">
@@ -96,15 +96,11 @@ const CycleInput = () => {
                   min="2"
                   max="10"
                   value={formData.periodLength}
-                  onChange={(e) =>
-                    setFormData({ ...formData, periodLength: parseInt(e.target.value) })
-                  }
-                  className="border-border"
+                  onChange={(e) => setFormData({ ...formData, periodLength: parseInt(e.target.value) })}
+                  className="border-0 bg-muted/50"
                   required
                 />
-                <p className="text-xs text-muted-foreground">
-                  Média: 5 dias (duração da menstruação)
-                </p>
+                <p className="text-xs text-muted-foreground">Média: 5 dias</p>
               </div>
             </div>
           </Card>

@@ -2,8 +2,6 @@ export interface CycleData {
   lastPeriodDate: string;
   cycleLength: number;
   periodLength: number;
-  isPregnant?: boolean;
-  pregnancyStartDate?: string;
 }
 
 export interface SymptomEntry {

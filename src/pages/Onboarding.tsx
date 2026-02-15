@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import { storage } from '@/lib/storage';
+import { cn } from '@/lib/utils';
 import onboarding1 from '@/assets/onboarding-1.jpg';
 import onboarding2 from '@/assets/onboarding-2.jpg';
-import onboarding3 from '@/assets/onboarding-3.jpg';
+import onboardingHero from '@/assets/onboarding-hero.jpg';
 
 const slides = [
   {
@@ -19,9 +20,9 @@ const slides = [
     description: 'Identifique seus dias férteis e planeje sua vida com mais segurança',
   },
   {
-    image: onboarding3,
-    title: 'Modo Gravidez',
-    description: 'Acompanhe cada semana da sua gestação com carinho e cuidado',
+    image: onboardingHero,
+    title: 'Cuide de Você',
+    description: 'Registre sintomas, humor e tenha controle total da sua saúde feminina',
   },
 ];
 
@@ -53,6 +54,7 @@ const Onboarding = () => {
               alt={slides[currentSlide].title}
               className="w-full h-full object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
           <div className="text-center space-y-4 mb-8">
@@ -69,7 +71,7 @@ const Onboarding = () => {
               <div
                 key={index}
                 className={cn(
-                  'h-2 rounded-full transition-all',
+                  'h-2 rounded-full transition-all duration-300',
                   index === currentSlide
                     ? 'w-8 bg-primary'
                     : 'w-2 bg-border'
@@ -102,9 +104,5 @@ const Onboarding = () => {
     </div>
   );
 };
-
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default Onboarding;

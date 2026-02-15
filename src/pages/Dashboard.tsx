@@ -11,11 +11,9 @@ import {
   getCurrentCycleDay,
   calculateFertileWindow,
   formatDate,
-  getPregnancyWeek,
-  calculateDueDate,
 } from '@/lib/cycleCalculations';
-import { Calendar, Heart, Baby, Droplets, Sparkles } from 'lucide-react';
-import { differenceInDays } from 'date-fns';
+import { Calendar, Heart, Droplets, Sparkles, TrendingUp } from 'lucide-react';
+import bgDashboard from '@/assets/bg-dashboard.jpg';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -32,63 +30,6 @@ const Dashboard = () => {
 
   if (!cycleData) return null;
 
-  const isPregnant = cycleData.isPregnant && cycleData.pregnancyStartDate;
-
-  if (isPregnant) {
-    const pregnancyWeek = getPregnancyWeek(cycleData.pregnancyStartDate!);
-    const dueDate = calculateDueDate(cycleData.pregnancyStartDate!);
-    const daysUntilDue = differenceInDays(dueDate, new Date());
-
-    return (
-      <div className="min-h-screen bg-gradient-soft pb-24">
-        <div className="max-w-md mx-auto px-6 py-8 space-y-6">
-          <div className="text-center animate-fade-in">
-            <h1 className="text-3xl font-bold text-foreground mb-2">
-              Olá, Mamãe! 💕
-            </h1>
-            <p className="text-muted-foreground">
-              Acompanhe cada momento especial
-            </p>
-          </div>
-
-          <Card className="p-8 shadow-card border-border bg-gradient-pink animate-slide-up">
-            <div className="text-center text-white">
-              <Baby className="w-12 h-12 mx-auto mb-4" />
-              <h2 className="text-5xl font-bold mb-2">{pregnancyWeek}</h2>
-              <p className="text-xl font-medium mb-4">Semanas de Gestação</p>
-              <div className="bg-white/20 rounded-lg p-4">
-                <p className="text-sm mb-1">Data Provável do Parto</p>
-                <p className="text-lg font-semibold">{formatDate(dueDate)}</p>
-                <p className="text-sm mt-2">Faltam {daysUntilDue} dias</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-6 shadow-card border-border">
-            <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-primary" />
-              Informações Importantes
-            </h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <p>• Mantenha uma alimentação saudável e equilibrada</p>
-              <p>• Faça o pré-natal regularmente</p>
-              <p>• Hidrate-se bem ao longo do dia</p>
-              <p>• Descanse sempre que sentir necessidade</p>
-            </div>
-          </Card>
-
-          <Button
-            onClick={() => navigate('/pregnancy')}
-            className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-12 shadow-soft"
-          >
-            Ver Detalhes da Gravidez
-          </Button>
-        </div>
-        <BottomNav />
-      </div>
-    );
-  }
-
   const nextPeriod = calculateNextPeriod(cycleData);
   const daysUntil = getDaysUntilNextPeriod(cycleData);
   const currentDay = getCurrentCycleDay(cycleData);
@@ -97,59 +38,91 @@ const Dashboard = () => {
   const isInFertileWindow =
     today >= fertileWindow.start && today <= fertileWindow.end;
 
+  const cycleProgress = (currentDay / cycleData.cycleLength) * 100;
+
   return (
-    <div className="min-h-screen bg-gradient-soft pb-24">
-      <div className="max-w-md mx-auto px-6 py-8 space-y-6">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0">
+        <img src={bgDashboard} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+      </div>
+
+      <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
+        {/* Header */}
         <div className="text-center animate-fade-in">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-1">
             Olá, Flor! 🌸
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Bem-vinda ao seu ciclo de hoje
           </p>
         </div>
 
-        <Card className="p-8 shadow-card border-border bg-gradient-pink animate-slide-up">
-          <div className="text-center text-white">
-            <Droplets className="w-12 h-12 mx-auto mb-4" />
-            <h2 className="text-5xl font-bold mb-2">{daysUntil}</h2>
-            <p className="text-xl font-medium mb-4">
+        {/* Main Card - Glassmorphism */}
+        <Card className="relative overflow-hidden p-8 shadow-soft border-0 bg-gradient-pink animate-slide-up">
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+          <div className="relative text-center text-white">
+            <Droplets className="w-10 h-10 mx-auto mb-3 drop-shadow-lg" />
+            <h2 className="text-6xl font-bold mb-1 drop-shadow-lg">{daysUntil}</h2>
+            <p className="text-lg font-medium mb-5 opacity-90">
               dias até sua próxima menstruação
             </p>
-            <div className="bg-white/20 rounded-lg p-4">
-              <p className="text-sm mb-1">Previsão</p>
-              <p className="text-lg font-semibold">{formatDate(nextPeriod)}</p>
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <p className="text-xs mb-1 opacity-80">Previsão</p>
+              <p className="text-lg font-bold">{formatDate(nextPeriod)}</p>
             </div>
           </div>
         </Card>
 
+        {/* Cycle Progress */}
+        <Card className="p-5 shadow-card border-0 bg-card/80 backdrop-blur-sm animate-slide-up">
+          <div className="flex items-center gap-3 mb-3">
+            <TrendingUp className="w-5 h-5 text-primary" />
+            <h3 className="font-semibold text-foreground text-sm">Progresso do Ciclo</h3>
+          </div>
+          <div className="bg-muted rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-gradient-pink h-full rounded-full transition-all duration-700 ease-out"
+              style={{ width: `${cycleProgress}%` }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Dia {currentDay} de {cycleData.cycleLength}
+          </p>
+        </Card>
+
+        {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-4 animate-slide-up">
-          <Card className="p-4 shadow-card border-border">
+          <Card className="p-5 shadow-card border-0 bg-card/80 backdrop-blur-sm">
             <div className="text-center">
-              <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <p className="text-2xl font-bold text-foreground">{currentDay}</p>
-              <p className="text-sm text-muted-foreground">Dia do Ciclo</p>
+              <Calendar className="w-7 h-7 mx-auto mb-2 text-primary" />
+              <p className="text-3xl font-bold text-foreground">{currentDay}</p>
+              <p className="text-xs text-muted-foreground mt-1">Dia do Ciclo</p>
             </div>
           </Card>
 
-          <Card className="p-4 shadow-card border-border">
+          <Card className="p-5 shadow-card border-0 bg-card/80 backdrop-blur-sm">
             <div className="text-center">
-              <Heart className="w-8 h-8 mx-auto mb-2 text-secondary" />
-              <p className="text-2xl font-bold text-foreground">
+              <Heart className="w-7 h-7 mx-auto mb-2 text-secondary" />
+              <p className="text-3xl font-bold text-foreground">
                 {isInFertileWindow ? '💕' : '—'}
               </p>
-              <p className="text-sm text-muted-foreground">Janela Fértil</p>
+              <p className="text-xs text-muted-foreground mt-1">Janela Fértil</p>
             </div>
           </Card>
         </div>
 
+        {/* Fertile Window Alert */}
         {isInFertileWindow && (
-          <Card className="p-4 shadow-card border-border bg-accent animate-slide-up">
+          <Card className="p-4 shadow-card border-0 bg-accent/80 backdrop-blur-sm animate-slide-up">
             <div className="flex items-center gap-3">
-              <Sparkles className="w-6 h-6 text-primary flex-shrink-0" />
+              <div className="w-10 h-10 rounded-full bg-gradient-pink flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
               <div>
-                <p className="font-semibold text-foreground">Você está na janela fértil!</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-semibold text-foreground text-sm">Você está na janela fértil!</p>
+                <p className="text-xs text-muted-foreground">
                   Período de maior fertilidade até {formatDate(fertileWindow.end)}
                 </p>
               </div>
@@ -157,11 +130,12 @@ const Dashboard = () => {
           </Card>
         )}
 
+        {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <Button
             onClick={() => navigate('/calendar')}
             variant="outline"
-            className="h-12 border-border"
+            className="h-12 border-0 bg-card/80 backdrop-blur-sm shadow-card hover:bg-card"
           >
             <Calendar className="w-4 h-4 mr-2" />
             Calendário
@@ -169,7 +143,7 @@ const Dashboard = () => {
           <Button
             onClick={() => navigate('/symptoms')}
             variant="outline"
-            className="h-12 border-border"
+            className="h-12 border-0 bg-card/80 backdrop-blur-sm shadow-card hover:bg-card"
           >
             <Heart className="w-4 h-4 mr-2" />
             Sintomas
