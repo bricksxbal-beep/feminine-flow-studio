@@ -6,36 +6,19 @@ import { Switch } from '@/components/ui/switch';
 import { BottomNav } from '@/components/BottomNav';
 import { storage } from '@/lib/storage';
 import { CycleData } from '@/types/cycle';
-import { Edit, Baby, Bell, Trash2, Info } from 'lucide-react';
+import { Edit, Bell, Trash2, Info } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Settings = () => {
   const navigate = useNavigate();
   const [cycleData, setCycleData] = useState<CycleData | null>(null);
-  const [isPregnant, setIsPregnant] = useState(false);
 
   useEffect(() => {
     const data = storage.getCycleData();
     if (data) {
       setCycleData(data);
-      setIsPregnant(data.isPregnant || false);
     }
   }, []);
-
-  const handlePregnancyToggle = (checked: boolean) => {
-    if (!cycleData) return;
-
-    const updatedData: CycleData = {
-      ...cycleData,
-      isPregnant: checked,
-      pregnancyStartDate: checked ? new Date().toISOString() : undefined,
-    };
-
-    storage.saveCycleData(updatedData);
-    setCycleData(updatedData);
-    setIsPregnant(checked);
-    toast.success(checked ? 'Modo gravidez ativado! 🎉' : 'Modo gravidez desativado');
-  };
 
   const handleClearData = () => {
     if (confirm('Tem certeza que deseja apagar todos os dados?')) {
@@ -57,41 +40,31 @@ const Settings = () => {
           </p>
         </div>
 
-        <Card className="p-6 shadow-card border-border animate-slide-up space-y-4">
+        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm animate-slide-up space-y-4">
           <h3 className="font-semibold text-foreground mb-4">Dados do Ciclo</h3>
           
           <button
             onClick={() => navigate('/cycle-input')}
-            className="w-full flex items-center justify-between p-4 rounded-lg hover:bg-accent transition-colors"
+            className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-accent transition-colors"
           >
             <div className="flex items-center gap-3">
-              <Edit className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 rounded-full bg-gradient-pink flex items-center justify-center">
+                <Edit className="w-5 h-5 text-white" />
+              </div>
               <span className="text-foreground">Editar Dados do Ciclo</span>
             </div>
             <span className="text-muted-foreground">→</span>
           </button>
-
-          <div className="flex items-center justify-between p-4 rounded-lg bg-accent">
-            <div className="flex items-center gap-3">
-              <Baby className="w-5 h-5 text-primary" />
-              <div>
-                <p className="text-foreground font-medium">Modo Gravidez</p>
-                <p className="text-xs text-muted-foreground">Acompanhe sua gestação</p>
-              </div>
-            </div>
-            <Switch
-              checked={isPregnant}
-              onCheckedChange={handlePregnancyToggle}
-            />
-          </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-border space-y-4">
+        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm space-y-4">
           <h3 className="font-semibold text-foreground mb-4">Notificações</h3>
           
-          <div className="flex items-center justify-between p-4 rounded-lg bg-accent">
+          <div className="flex items-center justify-between p-4 rounded-xl bg-accent/50">
             <div className="flex items-center gap-3">
-              <Bell className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Bell className="w-5 h-5 text-primary" />
+              </div>
               <div>
                 <p className="text-foreground font-medium">Lembrete de Período</p>
                 <p className="text-xs text-muted-foreground">Notificar 2 dias antes</p>
@@ -100,9 +73,11 @@ const Settings = () => {
             <Switch defaultChecked />
           </div>
 
-          <div className="flex items-center justify-between p-4 rounded-lg bg-accent">
+          <div className="flex items-center justify-between p-4 rounded-xl bg-accent/50">
             <div className="flex items-center gap-3">
-              <Bell className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Bell className="w-5 h-5 text-primary" />
+              </div>
               <div>
                 <p className="text-foreground font-medium">Janela Fértil</p>
                 <p className="text-xs text-muted-foreground">Notificar dias férteis</p>
@@ -112,11 +87,13 @@ const Settings = () => {
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-border space-y-4">
+        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm space-y-4">
           <h3 className="font-semibold text-foreground mb-4">Sobre</h3>
           
-          <div className="flex items-center gap-3 p-4 rounded-lg bg-accent">
-            <Info className="w-5 h-5 text-primary" />
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-accent/50">
+            <div className="w-10 h-10 rounded-full bg-gradient-pink flex items-center justify-center">
+              <Info className="w-5 h-5 text-white" />
+            </div>
             <div>
               <p className="text-foreground font-medium">BloomPink</p>
               <p className="text-xs text-muted-foreground">Versão 1.0.0</p>

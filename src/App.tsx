@@ -10,7 +10,6 @@ import CycleInput from "./pages/CycleInput";
 import Dashboard from "./pages/Dashboard";
 import CalendarPage from "./pages/CalendarPage";
 import Symptoms from "./pages/Symptoms";
-import Pregnancy from "./pages/Pregnancy";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -46,7 +45,6 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/symptoms" element={<Symptoms />} />
-            <Route path="/pregnancy" element={<Pregnancy />} />
             <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

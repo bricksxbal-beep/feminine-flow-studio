@@ -7,14 +7,15 @@ import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
 import { Smile, Frown, Meh, Heart, Zap, Moon, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import bgDashboard from '@/assets/bg-dashboard.jpg';
 
 const moods = [
-  { id: 'happy', icon: Smile, label: 'Feliz', color: 'text-primary' },
-  { id: 'sad', icon: Frown, label: 'Triste', color: 'text-muted-foreground' },
-  { id: 'anxious', icon: Meh, label: 'Ansiosa', color: 'text-secondary' },
-  { id: 'calm', icon: Heart, label: 'Calma', color: 'text-pink-soft' },
-  { id: 'energetic', icon: Zap, label: 'Energética', color: 'text-primary' },
-  { id: 'tired', icon: Moon, label: 'Cansada', color: 'text-muted-foreground' },
+  { id: 'happy', icon: Smile, label: 'Feliz' },
+  { id: 'sad', icon: Frown, label: 'Triste' },
+  { id: 'anxious', icon: Meh, label: 'Ansiosa' },
+  { id: 'calm', icon: Heart, label: 'Calma' },
+  { id: 'energetic', icon: Zap, label: 'Energética' },
+  { id: 'tired', icon: Moon, label: 'Cansada' },
 ];
 
 const symptoms = [
@@ -60,42 +61,45 @@ const Symptoms = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-soft pb-24">
-      <div className="max-w-md mx-auto px-6 py-8 space-y-6">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgDashboard} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+      </div>
+
+      <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
         <div className="text-center animate-fade-in">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Como você está?
           </h1>
-          <p className="text-muted-foreground">
-            Registre seus sintomas e humor
-          </p>
+          <p className="text-muted-foreground">Registre seus sintomas e humor</p>
         </div>
 
-        <Card className="p-6 shadow-card border-border animate-slide-up">
+        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md animate-slide-up">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
             Seu Humor Hoje
           </h3>
           <div className="grid grid-cols-3 gap-3">
-            {moods.map(({ id, icon: Icon, label, color }) => (
+            {moods.map(({ id, icon: Icon, label }) => (
               <button
                 key={id}
                 onClick={() => setSelectedMood(id)}
                 className={cn(
-                  'p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2',
+                  'p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2',
                   selectedMood === id
-                    ? 'border-primary bg-accent scale-105'
-                    : 'border-border hover:border-primary/50'
+                    ? 'border-primary bg-accent scale-105 shadow-sm'
+                    : 'border-transparent bg-muted/50 hover:border-primary/30'
                 )}
               >
-                <Icon className={cn('w-6 h-6', color)} />
+                <Icon className={cn('w-6 h-6', selectedMood === id ? 'text-primary' : 'text-muted-foreground')} />
                 <span className="text-xs font-medium text-foreground">{label}</span>
               </button>
             ))}
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-border">
+        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
           <h3 className="font-semibold text-foreground mb-4">Sintomas</h3>
           <div className="flex flex-wrap gap-2">
             {symptoms.map(({ id, label }) => (
@@ -105,8 +109,8 @@ const Symptoms = () => {
                 className={cn(
                   'px-4 py-2 rounded-full text-sm font-medium transition-all',
                   selectedSymptoms.includes(id)
-                    ? 'bg-primary text-white'
-                    : 'bg-accent text-foreground hover:bg-primary/10'
+                    ? 'bg-gradient-pink text-white shadow-sm'
+                    : 'bg-muted/50 text-foreground hover:bg-accent'
                 )}
               >
                 {label}
@@ -115,13 +119,13 @@ const Symptoms = () => {
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-border">
+        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
           <h3 className="font-semibold text-foreground mb-4">Anotações</h3>
           <Textarea
             placeholder="Como você está se sentindo? Anote aqui..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="min-h-[100px] border-border"
+            className="min-h-[100px] border-0 bg-muted/50"
           />
         </Card>
 
