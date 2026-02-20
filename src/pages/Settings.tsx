@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { BottomNav } from '@/components/BottomNav';
 import { storage } from '@/lib/storage';
 import { CycleData } from '@/types/cycle';
-import { Edit, Bell, Trash2, Info, Sparkles, Globe, Moon } from 'lucide-react';
+import { Edit, Bell, Trash2, Info, Sparkles, Globe, Moon, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Language } from '@/i18n/translations';
@@ -163,6 +163,26 @@ const Settings = () => {
               }}
             />
           </div>
+        </Card>
+
+        {/* Terms of Use */}
+        <Card className="p-5 shadow-card border-0 bg-card/90 backdrop-blur-md space-y-3">
+          <h3 className="font-semibold text-foreground text-sm">📄 {t('settingsTerms')}</h3>
+          <button
+            onClick={() => navigate('/terms')}
+            className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-accent/50 transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <FileText className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-left">
+                <p className="text-foreground font-medium text-sm">{t('settingsTerms')}</p>
+                <p className="text-xs text-muted-foreground">{t('settingsTermsDesc')}</p>
+              </div>
+            </div>
+            <span className="text-muted-foreground">→</span>
+          </button>
         </Card>
 
         {/* About */}

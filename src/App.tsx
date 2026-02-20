@@ -14,6 +14,7 @@ import Symptoms from "./pages/Symptoms";
 import Settings from "./pages/Settings";
 import AnalysisPage from "./pages/AnalysisPage";
 import DailyTip from "./pages/DailyTip";
+import TermsOfUse from "./pages/TermsOfUse";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const App = () => {
               <Route path="/daily-tip" element={<DailyTip />} />
               <Route path="/symptoms" element={<Symptoms />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/terms" element={<TermsOfUse />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
