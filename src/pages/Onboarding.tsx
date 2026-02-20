@@ -4,31 +4,21 @@ import { Button } from '@/components/ui/button';
 import { ChevronRight, Sparkles } from 'lucide-react';
 import { storage } from '@/lib/storage';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 import onboarding1 from '@/assets/onboarding-1.jpg';
 import onboarding2 from '@/assets/onboarding-2.jpg';
 import onboardingHero from '@/assets/onboarding-hero.jpg';
 
-const slides = [
-  {
-    image: onboarding1,
-    title: 'Acompanhe seu Ciclo 🌸',
-    description: 'Registre e monitore seu ciclo menstrual de forma simples e intuitiva',
-  },
-  {
-    image: onboarding2,
-    title: 'Preveja sua Ovulação 💜',
-    description: 'Identifique seus dias férteis e planeje sua vida com mais segurança',
-  },
-  {
-    image: onboardingHero,
-    title: 'Cuide de Você 💕',
-    description: 'Registre sintomas, humor e tenha controle total da sua saúde feminina',
-  },
-];
-
 const Onboarding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  const slides = [
+    { image: onboarding1, title: t('onboardingSlide1Title'), description: t('onboardingSlide1Desc') },
+    { image: onboarding2, title: t('onboardingSlide2Title'), description: t('onboardingSlide2Desc') },
+    { image: onboardingHero, title: t('onboardingSlide3Title'), description: t('onboardingSlide3Desc') },
+  ];
 
   const handleNext = () => {
     if (currentSlide < slides.length - 1) {
@@ -48,30 +38,25 @@ const Onboarding = () => {
     <div className="min-h-screen bg-gradient-soft flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
         <div className="w-full max-w-md animate-fade-in">
-          {/* Brand badge */}
           <div className="flex justify-center mb-6">
             <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-1.5">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-xs font-semibold text-primary tracking-wide">BLOOMPINK</span>
+              <span className="text-xs font-semibold text-primary tracking-wide">{t('onboardingBrand')}</span>
             </div>
           </div>
 
           <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-soft mb-8">
             <img
               src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
+              alt={String(slides[currentSlide].title)}
               className="w-full h-full object-cover transition-all duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           </div>
 
           <div className="text-center space-y-4 mb-8">
-            <h1 className="text-3xl font-bold text-foreground">
-              {slides[currentSlide].title}
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {slides[currentSlide].description}
-            </p>
+            <h1 className="text-3xl font-bold text-foreground">{slides[currentSlide].title}</h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">{slides[currentSlide].description}</p>
           </div>
 
           <div className="flex justify-center gap-2 mb-8">
@@ -80,9 +65,7 @@ const Onboarding = () => {
                 key={index}
                 className={cn(
                   'h-2 rounded-full transition-all duration-500',
-                  index === currentSlide
-                    ? 'w-10 bg-gradient-pink shadow-sm'
-                    : 'w-2 bg-border'
+                  index === currentSlide ? 'w-10 bg-gradient-pink shadow-sm' : 'w-2 bg-border'
                 )}
               />
             ))}
@@ -95,17 +78,13 @@ const Onboarding = () => {
           onClick={handleNext}
           className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-14 text-lg font-semibold shadow-soft"
         >
-          {currentSlide === slides.length - 1 ? '✨ Começar' : 'Próximo'}
+          {currentSlide === slides.length - 1 ? t('onboardingStart') : t('onboardingNext')}
           <ChevronRight className="ml-2 w-5 h-5" />
         </Button>
 
         {currentSlide < slides.length - 1 && (
-          <Button
-            onClick={handleSkip}
-            variant="ghost"
-            className="w-full text-muted-foreground"
-          >
-            Pular
+          <Button onClick={handleSkip} variant="ghost" className="w-full text-muted-foreground">
+            {t('onboardingSkip')}
           </Button>
         )}
       </div>

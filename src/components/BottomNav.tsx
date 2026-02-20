@@ -1,16 +1,18 @@
 import { Home, Calendar, Heart, Settings } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navItems = [
-    { icon: Home, label: 'Início', path: '/dashboard' },
-    { icon: Calendar, label: 'Calendário', path: '/calendar' },
-    { icon: Heart, label: 'Sintomas', path: '/symptoms' },
-    { icon: Settings, label: 'Config', path: '/settings' },
+    { icon: Home, label: t('navHome'), path: '/dashboard' },
+    { icon: Calendar, label: t('navCalendar'), path: '/calendar' },
+    { icon: Heart, label: t('navSymptoms'), path: '/symptoms' },
+    { icon: Settings, label: t('navSettings'), path: '/settings' },
   ];
 
   return (

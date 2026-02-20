@@ -10,13 +10,17 @@ import {
 } from '@/lib/cycleCalculations';
 import { ChevronLeft, ChevronRight, Droplets, Heart, Sparkles } from 'lucide-react';
 import { addMonths, subMonths, format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addDays, isSameMonth } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { ptBR, enUS, es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/i18n/LanguageContext';
 import bgCalendar from '@/assets/bg-calendar.jpg';
+
+const localeMap = { pt: ptBR, en: enUS, es: es };
 
 const CalendarPage = () => {
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [cycleData, setCycleData] = useState<CycleData | null>(null);
 
@@ -43,10 +47,7 @@ const CalendarPage = () => {
   const isPeriodDay = (date: Date) => {
     const periodEnd = addDays(lastPeriodDate, cycleData.periodLength - 1);
     const nextPeriodEnd = addDays(nextPeriodDate, cycleData.periodLength - 1);
-    return (
-      (date >= lastPeriodDate && date <= periodEnd) ||
-      (date >= nextPeriodDate && date <= nextPeriodEnd)
-    );
+    return (date >= lastPeriodDate && date <= periodEnd) || (date >= nextPeriodDate && date <= nextPeriodEnd);
   };
 
   const isFertileDay = (date: Date) => date >= fertileWindow.start && date <= fertileWindow.end;
@@ -59,6 +60,8 @@ const CalendarPage = () => {
     return 'normal';
   };
 
+  const calendarDays = t('calendarDays') as string[];
+
   return (
     <div className="min-h-screen pb-24 relative overflow-hidden">
       <div className="fixed inset-0 z-0">
@@ -70,10 +73,10 @@ const CalendarPage = () => {
         <div className="text-center animate-fade-in">
           <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-xs font-medium text-primary">Seu Ciclo</span>
+            <span className="text-xs font-medium text-primary">{t('calendarYourCycle')}</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Calendário 📅</h1>
-          <p className="text-muted-foreground">Acompanhe seu ciclo menstrual</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t('calendarTitle')}</h1>
+          <p className="text-muted-foreground">{t('calendarSubtitle')}</p>
         </div>
 
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up">
@@ -82,7 +85,7 @@ const CalendarPage = () => {
               <ChevronLeft className="w-5 h-5 text-foreground" />
             </button>
             <h2 className="text-xl font-semibold text-foreground capitalize">
-              {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
+              {format(currentMonth, 'MMMM yyyy', { locale: localeMap[language] })}
             </h2>
             <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2.5 hover:bg-accent rounded-2xl transition-all hover:scale-105">
               <ChevronRight className="w-5 h-5 text-foreground" />
@@ -90,7 +93,7 @@ const CalendarPage = () => {
           </div>
 
           <div className="grid grid-cols-7 gap-1.5 mb-3">
-            {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day) => (
+            {calendarDays.map((day) => (
               <div key={day} className="text-center text-[11px] font-semibold text-muted-foreground py-2 uppercase tracking-wider">{day}</div>
             ))}
           </div>
@@ -124,25 +127,25 @@ const CalendarPage = () => {
         </Card>
 
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">Legenda</h3>
+          <h3 className="font-semibold text-foreground mb-4">{t('calendarLegend')}</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-sm">
                 <Droplets className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="text-sm text-foreground font-medium">Período Menstrual</span>
+              <span className="text-sm text-foreground font-medium">{t('calendarPeriod')}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center shadow-sm">
                 <Sparkles className="w-4 h-4 text-secondary-foreground" />
               </div>
-              <span className="text-sm text-foreground font-medium">Dia da Ovulação</span>
+              <span className="text-sm text-foreground font-medium">{t('calendarOvulation')}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-pink-soft flex items-center justify-center">
                 <Heart className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-sm text-foreground font-medium">Janela Fértil</span>
+              <span className="text-sm text-foreground font-medium">{t('calendarFertile')}</span>
             </div>
           </div>
         </Card>
