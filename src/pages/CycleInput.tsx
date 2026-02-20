@@ -14,7 +14,7 @@ const CycleInput = () => {
   const existingData = storage.getCycleData();
 
   const [formData, setFormData] = useState({
-    lastPeriodDate: existingData?.lastPeriodDate || '',
+    lastPeriodDate: existingData?.lastPeriodDate || new Date().toISOString().split('T')[0],
     cycleLength: existingData?.cycleLength || 28,
     periodLength: existingData?.periodLength || 5,
   });
