@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNotifications } from '@/hooks/useNotifications';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [cycleData, setCycleData] = useState<CycleData | null>(null);
+  useNotifications(); // Activate notification scheduling
 
   useEffect(() => {
     const data = storage.getCycleData();

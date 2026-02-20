@@ -99,6 +99,10 @@ export const translations = {
     settingsLanguage: '🌍 Idioma',
     settingsLanguageLabel: 'Idioma do App',
     settingsLanguageDesc: 'Selecione o idioma',
+    settingsNotifEnable: 'Ativar Notificações',
+    settingsNotifEnableDesc: 'Receba lembretes 2x ao dia',
+    settingsNotifBlocked: 'Notificações bloqueadas no navegador',
+    settingsNotifEnabled: 'Notificações ativadas!',
 
     // Bottom Nav
     navHome: 'Início',
@@ -198,6 +202,10 @@ export const translations = {
     settingsLanguage: '🌍 Language',
     settingsLanguageLabel: 'App Language',
     settingsLanguageDesc: 'Select language',
+    settingsNotifEnable: 'Enable Notifications',
+    settingsNotifEnableDesc: 'Get reminders 2x daily',
+    settingsNotifBlocked: 'Notifications blocked in browser',
+    settingsNotifEnabled: 'Notifications enabled!',
 
     navHome: 'Home',
     navCalendar: 'Calendar',
@@ -296,6 +304,10 @@ export const translations = {
     settingsLanguage: '🌍 Idioma',
     settingsLanguageLabel: 'Idioma de la App',
     settingsLanguageDesc: 'Seleccionar idioma',
+    settingsNotifEnable: 'Activar Notificaciones',
+    settingsNotifEnableDesc: 'Recibe recordatorios 2x al día',
+    settingsNotifBlocked: 'Notificaciones bloqueadas en el navegador',
+    settingsNotifEnabled: '¡Notificaciones activadas!',
 
     navHome: 'Inicio',
     navCalendar: 'Calendario',

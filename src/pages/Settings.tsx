@@ -11,6 +11,7 @@ import { Edit, Bell, Trash2, Info, Sparkles, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Language } from '@/i18n/translations';
+import { useNotifications } from '@/hooks/useNotifications';
 import bgSettings from '@/assets/bg-settings.jpg';
 
 const languageLabels: Record<Language, string> = {
@@ -23,6 +24,7 @@ const Settings = () => {
   const navigate = useNavigate();
   const { t, language, setLanguage } = useLanguage();
   const [cycleData, setCycleData] = useState<CycleData | null>(null);
+  const { isEnabled, isSupported, permission, requestPermission, disableNotifications } = useNotifications();
 
   useEffect(() => {
     const data = storage.getCycleData();
@@ -102,6 +104,33 @@ const Settings = () => {
         {/* Notifications */}
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md space-y-4">
           <h3 className="font-semibold text-foreground mb-4">{t('settingsNotifications')}</h3>
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-accent/30 backdrop-blur-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <Bell className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-foreground font-medium">{t('settingsNotifEnable')}</p>
+                <p className="text-xs text-muted-foreground">
+                  {!isSupported || permission === 'denied'
+                    ? t('settingsNotifBlocked')
+                    : t('settingsNotifEnableDesc')}
+                </p>
+              </div>
+            </div>
+            <Switch
+              checked={isEnabled}
+              disabled={!isSupported || permission === 'denied'}
+              onCheckedChange={async (checked) => {
+                if (checked) {
+                  const granted = await requestPermission();
+                  if (granted) toast.success(t('settingsNotifEnabled'));
+                } else {
+                  disableNotifications();
+                }
+              }}
+            />
+          </div>
           <div className="flex items-center justify-between p-4 rounded-2xl bg-accent/30 backdrop-blur-sm">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
