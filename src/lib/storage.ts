@@ -32,4 +32,10 @@ export const storage = {
   setOnboardingCompleted: (): void => {
     localStorage.setItem(ONBOARDING_KEY, 'true');
   },
+
+  deleteSymptom: (index: number): void => {
+    const symptoms = storage.getSymptoms();
+    symptoms.splice(index, 1);
+    localStorage.setItem(SYMPTOMS_KEY, JSON.stringify(symptoms));
+  },
 };
