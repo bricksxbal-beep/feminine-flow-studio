@@ -33,7 +33,7 @@ const Settings = () => {
     <div className="min-h-screen pb-24 relative overflow-hidden">
       <div className="fixed inset-0 z-0">
         <img src={bgSettings} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-background/50" />
       </div>
 
       <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
