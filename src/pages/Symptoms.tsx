@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { Smile, Frown, Meh, Heart, Zap, Moon, Activity, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/i18n/LanguageContext';
+import bgSymptoms from '@/assets/bg-symptoms.jpg';
 
 const Symptoms = () => {
   const { t } = useLanguage();
@@ -58,8 +59,12 @@ const Symptoms = () => {
   };
 
   return (
-    <div className="min-h-screen pb-24 bg-background">
-      <div className="max-w-md mx-auto px-6 py-6 space-y-5">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgSymptoms} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+      </div>
+      <div className="relative z-10 max-w-md mx-auto px-6 py-6 space-y-5">
         <div className="text-center animate-fade-in pt-2">
           <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
