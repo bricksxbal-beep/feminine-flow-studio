@@ -17,6 +17,7 @@ import { getCyclePhase } from '@/lib/phaseCalculations';
 import { getDailyTip } from '@/lib/dailyTips';
 import { Edit, Lightbulb, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
+import bgDashboard from '@/assets/bg-dashboard.jpg';
 
 const phaseEmoji: Record<string, string> = {
   menstrual: '🩸',
@@ -56,8 +57,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen pb-24 bg-background">
-      <div className="max-w-md mx-auto px-6 py-6 space-y-5">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgDashboard} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+      </div>
+      <div className="relative z-10 max-w-md mx-auto px-6 py-6 space-y-5">
         {/* Header */}
         <div className="text-center animate-fade-in pt-2">
           <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-1.5 mb-2">

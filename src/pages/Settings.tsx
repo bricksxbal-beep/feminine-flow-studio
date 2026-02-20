@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Language } from '@/i18n/translations';
 import { useNotifications } from '@/hooks/useNotifications';
+import bgSettings from '@/assets/bg-settings.jpg';
 
 const DARK_MODE_KEY = 'ciclo_dark_mode';
 
@@ -58,8 +59,12 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen pb-24 bg-background">
-      <div className="max-w-md mx-auto px-6 py-6 space-y-5">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgSettings} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/50" />
+      </div>
+      <div className="relative z-10 max-w-md mx-auto px-6 py-6 space-y-5">
         <div className="text-center animate-fade-in pt-2">
           <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
