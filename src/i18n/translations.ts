@@ -105,6 +105,17 @@ export const translations = {
     symptomNausea: 'Náusea',
     symptomTenderBreasts: 'Seios Sensíveis',
 
+    // History
+    historyTitle: '📋 Seus Registros',
+    historyEmpty: 'Nenhum registro salvo ainda',
+    historyMood: 'Humor',
+    historySymptoms: 'Sintomas',
+    historyNotes: 'Notas',
+    historyDelete: 'Excluir',
+    historyDeleteSuccess: 'Registro excluído!',
+    historyToday: 'Hoje',
+    historyYesterday: 'Ontem',
+
     // Analysis
     analysisTitle: 'Análises 📊',
     analysisSubtitle: 'Entenda seu ciclo',
@@ -259,6 +270,16 @@ export const translations = {
     symptomNausea: 'Nausea',
     symptomTenderBreasts: 'Tender Breasts',
 
+    historyTitle: '📋 Your Records',
+    historyEmpty: 'No records saved yet',
+    historyMood: 'Mood',
+    historySymptoms: 'Symptoms',
+    historyNotes: 'Notes',
+    historyDelete: 'Delete',
+    historyDeleteSuccess: 'Record deleted!',
+    historyToday: 'Today',
+    historyYesterday: 'Yesterday',
+
     analysisTitle: 'Analysis 📊',
     analysisSubtitle: 'Understand your cycle',
     analysisMenstruation: 'Menstruation',
@@ -409,6 +430,16 @@ export const translations = {
     symptomBackpain: 'Dolor de Espalda',
     symptomNausea: 'Náusea',
     symptomTenderBreasts: 'Senos Sensibles',
+
+    historyTitle: '📋 Tus Registros',
+    historyEmpty: 'Ningún registro guardado aún',
+    historyMood: 'Humor',
+    historySymptoms: 'Síntomas',
+    historyNotes: 'Notas',
+    historyDelete: 'Eliminar',
+    historyDeleteSuccess: '¡Registro eliminado!',
+    historyToday: 'Hoy',
+    historyYesterday: 'Ayer',
 
     analysisTitle: 'Análisis 📊',
     analysisSubtitle: 'Entiende tu ciclo',
