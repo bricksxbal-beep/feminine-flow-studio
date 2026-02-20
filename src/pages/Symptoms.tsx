@@ -7,54 +7,52 @@ import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
 import { Smile, Frown, Meh, Heart, Zap, Moon, Activity, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/i18n/LanguageContext';
 import bgSymptoms from '@/assets/bg-symptoms.jpg';
 
-const moods = [
-  { id: 'happy', icon: Smile, label: 'Feliz', emoji: '😊' },
-  { id: 'sad', icon: Frown, label: 'Triste', emoji: '😢' },
-  { id: 'anxious', icon: Meh, label: 'Ansiosa', emoji: '😰' },
-  { id: 'calm', icon: Heart, label: 'Calma', emoji: '😌' },
-  { id: 'energetic', icon: Zap, label: 'Energética', emoji: '⚡' },
-  { id: 'tired', icon: Moon, label: 'Cansada', emoji: '😴' },
-];
-
-const symptoms = [
-  { id: 'cramps', label: 'Cólicas', emoji: '🔥' },
-  { id: 'headache', label: 'Dor de Cabeça', emoji: '🤕' },
-  { id: 'bloating', label: 'Inchaço', emoji: '💨' },
-  { id: 'acne', label: 'Acne', emoji: '✨' },
-  { id: 'backpain', label: 'Dor nas Costas', emoji: '💆' },
-  { id: 'nausea', label: 'Náusea', emoji: '🤢' },
-  { id: 'tender_breasts', label: 'Seios Sensíveis', emoji: '💗' },
-];
-
 const Symptoms = () => {
+  const { t } = useLanguage();
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [notes, setNotes] = useState('');
 
+  const moods = [
+    { id: 'happy', icon: Smile, label: t('moodHappy'), emoji: '😊' },
+    { id: 'sad', icon: Frown, label: t('moodSad'), emoji: '😢' },
+    { id: 'anxious', icon: Meh, label: t('moodAnxious'), emoji: '😰' },
+    { id: 'calm', icon: Heart, label: t('moodCalm'), emoji: '😌' },
+    { id: 'energetic', icon: Zap, label: t('moodEnergetic'), emoji: '⚡' },
+    { id: 'tired', icon: Moon, label: t('moodTired'), emoji: '😴' },
+  ];
+
+  const symptoms = [
+    { id: 'cramps', label: t('symptomCramps'), emoji: '🔥' },
+    { id: 'headache', label: t('symptomHeadache'), emoji: '🤕' },
+    { id: 'bloating', label: t('symptomBloating'), emoji: '💨' },
+    { id: 'acne', label: t('symptomAcne'), emoji: '✨' },
+    { id: 'backpain', label: t('symptomBackpain'), emoji: '💆' },
+    { id: 'nausea', label: t('symptomNausea'), emoji: '🤢' },
+    { id: 'tender_breasts', label: t('symptomTenderBreasts'), emoji: '💗' },
+  ];
+
   const toggleSymptom = (symptomId: string) => {
     setSelectedSymptoms((prev) =>
-      prev.includes(symptomId)
-        ? prev.filter((id) => id !== symptomId)
-        : [...prev, symptomId]
+      prev.includes(symptomId) ? prev.filter((id) => id !== symptomId) : [...prev, symptomId]
     );
   };
 
   const handleSave = () => {
     if (!selectedMood) {
-      toast.error('Por favor, selecione seu humor');
+      toast.error(t('symptomsMoodError'));
       return;
     }
-
     storage.saveSymptom({
       date: new Date().toISOString(),
       mood: selectedMood,
       symptoms: selectedSymptoms,
       notes,
     });
-
-    toast.success('Sintomas registrados com sucesso!');
+    toast.success(t('symptomsSuccess'));
     setSelectedMood('');
     setSelectedSymptoms([]);
     setNotes('');
@@ -71,18 +69,16 @@ const Symptoms = () => {
         <div className="text-center animate-fade-in">
           <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-xs font-medium text-primary">Registro Diário</span>
+            <span className="text-xs font-medium text-primary">{t('symptomsDailyRecord')}</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Como você está? 💐
-          </h1>
-          <p className="text-muted-foreground">Registre seus sintomas e humor</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t('symptomsTitle')}</h1>
+          <p className="text-muted-foreground">{t('symptomsSubtitle')}</p>
         </div>
 
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
-            Seu Humor Hoje
+            {t('symptomsMoodToday')}
           </h3>
           <div className="grid grid-cols-3 gap-3">
             {moods.map(({ id, label, emoji }) => (
@@ -104,7 +100,7 @@ const Symptoms = () => {
         </Card>
 
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">Sintomas</h3>
+          <h3 className="font-semibold text-foreground mb-4">{t('symptomsSymptoms')}</h3>
           <div className="flex flex-wrap gap-2">
             {symptoms.map(({ id, label, emoji }) => (
               <button
@@ -124,9 +120,9 @@ const Symptoms = () => {
         </Card>
 
         <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">📝 Anotações</h3>
+          <h3 className="font-semibold text-foreground mb-4">{t('symptomsNotes')}</h3>
           <Textarea
-            placeholder="Como você está se sentindo? Anote aqui..."
+            placeholder={String(t('symptomsNotesPlaceholder'))}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className="min-h-[100px] border-0 bg-muted/50 rounded-xl"
@@ -137,7 +133,7 @@ const Symptoms = () => {
           onClick={handleSave}
           className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-14 text-lg font-semibold shadow-soft"
         >
-          ✨ Salvar Registro
+          {t('symptomsSave')}
         </Button>
       </div>
       <BottomNav />
