@@ -8,7 +8,6 @@ import { toast } from 'sonner';
 import { Smile, Frown, Meh, Heart, Zap, Moon, Activity, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/i18n/LanguageContext';
-import bgSymptoms from '@/assets/bg-symptoms.jpg';
 
 const Symptoms = () => {
   const { t } = useLanguage();
@@ -59,58 +58,53 @@ const Symptoms = () => {
   };
 
   return (
-    <div className="min-h-screen pb-24 relative overflow-hidden">
-      <div className="fixed inset-0 z-0">
-        <img src={bgSymptoms} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/50" />
-      </div>
-
-      <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
-        <div className="text-center animate-fade-in">
-          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
+    <div className="min-h-screen pb-24 bg-background">
+      <div className="max-w-md mx-auto px-6 py-6 space-y-5">
+        <div className="text-center animate-fade-in pt-2">
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-xs font-medium text-primary">{t('symptomsDailyRecord')}</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">{t('symptomsTitle')}</h1>
-          <p className="text-muted-foreground">{t('symptomsSubtitle')}</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('symptomsTitle')}</h1>
+          <p className="text-sm text-muted-foreground">{t('symptomsSubtitle')}</p>
         </div>
 
-        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up">
-          <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Card className="p-5 shadow-card border-0 bg-card/90 backdrop-blur-md animate-slide-up">
+          <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2 text-sm">
             <Activity className="w-5 h-5 text-primary" />
             {t('symptomsMoodToday')}
           </h3>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2.5">
             {moods.map(({ id, label, emoji }) => (
               <button
                 key={id}
                 onClick={() => setSelectedMood(id)}
                 className={cn(
-                  'p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2',
+                  'p-3 rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5',
                   selectedMood === id
                     ? 'border-primary bg-accent shadow-soft scale-105'
-                    : 'border-transparent bg-card/60 backdrop-blur-sm hover:border-primary/30 hover:scale-[1.02]'
+                    : 'border-transparent bg-accent/30 hover:border-primary/30 hover:scale-[1.02]'
                 )}
               >
                 <span className="text-2xl">{emoji}</span>
-                <span className="text-xs font-medium text-foreground">{label}</span>
+                <span className="text-[10px] font-medium text-foreground">{label}</span>
               </button>
             ))}
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">{t('symptomsSymptoms')}</h3>
+        <Card className="p-5 shadow-card border-0 bg-card/90 backdrop-blur-md">
+          <h3 className="font-semibold text-foreground mb-4 text-sm">{t('symptomsSymptoms')}</h3>
           <div className="flex flex-wrap gap-2">
             {symptoms.map(({ id, label, emoji }) => (
               <button
                 key={id}
                 onClick={() => toggleSymptom(id)}
                 className={cn(
-                  'px-4 py-2.5 rounded-full text-sm font-medium transition-all',
+                  'px-3.5 py-2 rounded-full text-xs font-medium transition-all',
                   selectedSymptoms.includes(id)
                     ? 'bg-gradient-pink text-white shadow-soft scale-105'
-                    : 'bg-card/60 backdrop-blur-sm text-foreground hover:bg-accent hover:scale-[1.02]'
+                    : 'bg-accent/30 text-foreground hover:bg-accent hover:scale-[1.02]'
                 )}
               >
                 {emoji} {label}
@@ -119,19 +113,19 @@ const Symptoms = () => {
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">{t('symptomsNotes')}</h3>
+        <Card className="p-5 shadow-card border-0 bg-card/90 backdrop-blur-md">
+          <h3 className="font-semibold text-foreground mb-3 text-sm">{t('symptomsNotes')}</h3>
           <Textarea
             placeholder={String(t('symptomsNotesPlaceholder'))}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="min-h-[100px] border-0 bg-muted/50 rounded-xl"
+            className="min-h-[80px] border-0 bg-muted/50 rounded-xl text-sm"
           />
         </Card>
 
         <Button
           onClick={handleSave}
-          className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-14 text-lg font-semibold shadow-soft"
+          className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-13 text-base font-semibold shadow-soft"
         >
           {t('symptomsSave')}
         </Button>
