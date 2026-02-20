@@ -14,8 +14,8 @@ export const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/80 backdrop-blur-xl border-t border-border/50 shadow-soft z-50">
-      <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-4">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card/70 backdrop-blur-xl border-t border-border/30 shadow-soft z-50">
+      <div className="flex justify-around items-center h-[68px] max-w-lg mx-auto px-4">
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive = location.pathname === path;
           return (
@@ -23,19 +23,25 @@ export const BottomNav = () => {
               key={path}
               onClick={() => navigate(path)}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl transition-all',
+                'flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl transition-all',
                 isActive
                   ? 'text-primary'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
               <div className={cn(
-                'transition-all',
-                isActive && 'bg-primary/10 p-1.5 rounded-xl'
+                'transition-all duration-300',
+                isActive && 'bg-gradient-pink p-2 rounded-2xl shadow-soft'
               )}>
-                <Icon className={cn('w-5 h-5', isActive && 'scale-110')} />
+                <Icon className={cn(
+                  'w-5 h-5 transition-all',
+                  isActive && 'text-white scale-110'
+                )} />
               </div>
-              <span className="text-[10px] font-medium">{label}</span>
+              <span className={cn(
+                'text-[10px] font-semibold',
+                isActive && 'text-primary'
+              )}>{label}</span>
             </button>
           );
         })}

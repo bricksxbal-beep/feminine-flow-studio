@@ -5,27 +5,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { BottomNav } from '@/components/BottomNav';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
-import { Smile, Frown, Meh, Heart, Zap, Moon, Activity } from 'lucide-react';
+import { Smile, Frown, Meh, Heart, Zap, Moon, Activity, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import bgDashboard from '@/assets/bg-dashboard.jpg';
+import bgSymptoms from '@/assets/bg-symptoms.jpg';
 
 const moods = [
-  { id: 'happy', icon: Smile, label: 'Feliz' },
-  { id: 'sad', icon: Frown, label: 'Triste' },
-  { id: 'anxious', icon: Meh, label: 'Ansiosa' },
-  { id: 'calm', icon: Heart, label: 'Calma' },
-  { id: 'energetic', icon: Zap, label: 'Energética' },
-  { id: 'tired', icon: Moon, label: 'Cansada' },
+  { id: 'happy', icon: Smile, label: 'Feliz', emoji: '😊' },
+  { id: 'sad', icon: Frown, label: 'Triste', emoji: '😢' },
+  { id: 'anxious', icon: Meh, label: 'Ansiosa', emoji: '😰' },
+  { id: 'calm', icon: Heart, label: 'Calma', emoji: '😌' },
+  { id: 'energetic', icon: Zap, label: 'Energética', emoji: '⚡' },
+  { id: 'tired', icon: Moon, label: 'Cansada', emoji: '😴' },
 ];
 
 const symptoms = [
-  { id: 'cramps', label: 'Cólicas' },
-  { id: 'headache', label: 'Dor de Cabeça' },
-  { id: 'bloating', label: 'Inchaço' },
-  { id: 'acne', label: 'Acne' },
-  { id: 'backpain', label: 'Dor nas Costas' },
-  { id: 'nausea', label: 'Náusea' },
-  { id: 'tender_breasts', label: 'Seios Sensíveis' },
+  { id: 'cramps', label: 'Cólicas', emoji: '🔥' },
+  { id: 'headache', label: 'Dor de Cabeça', emoji: '🤕' },
+  { id: 'bloating', label: 'Inchaço', emoji: '💨' },
+  { id: 'acne', label: 'Acne', emoji: '✨' },
+  { id: 'backpain', label: 'Dor nas Costas', emoji: '💆' },
+  { id: 'nausea', label: 'Náusea', emoji: '🤢' },
+  { id: 'tender_breasts', label: 'Seios Sensíveis', emoji: '💗' },
 ];
 
 const Symptoms = () => {
@@ -63,69 +63,73 @@ const Symptoms = () => {
   return (
     <div className="min-h-screen pb-24 relative overflow-hidden">
       <div className="fixed inset-0 z-0">
-        <img src={bgDashboard} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+        <img src={bgSymptoms} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
       </div>
 
       <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
         <div className="text-center animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-xs font-medium text-primary">Registro Diário</span>
+          </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Como você está?
+            Como você está? 💐
           </h1>
           <p className="text-muted-foreground">Registre seus sintomas e humor</p>
         </div>
 
-        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md animate-slide-up">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-primary" />
             Seu Humor Hoje
           </h3>
           <div className="grid grid-cols-3 gap-3">
-            {moods.map(({ id, icon: Icon, label }) => (
+            {moods.map(({ id, label, emoji }) => (
               <button
                 key={id}
                 onClick={() => setSelectedMood(id)}
                 className={cn(
                   'p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2',
                   selectedMood === id
-                    ? 'border-primary bg-accent scale-105 shadow-sm'
-                    : 'border-transparent bg-muted/50 hover:border-primary/30'
+                    ? 'border-primary bg-accent shadow-soft scale-105'
+                    : 'border-transparent bg-card/60 backdrop-blur-sm hover:border-primary/30 hover:scale-[1.02]'
                 )}
               >
-                <Icon className={cn('w-6 h-6', selectedMood === id ? 'text-primary' : 'text-muted-foreground')} />
+                <span className="text-2xl">{emoji}</span>
                 <span className="text-xs font-medium text-foreground">{label}</span>
               </button>
             ))}
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
           <h3 className="font-semibold text-foreground mb-4">Sintomas</h3>
           <div className="flex flex-wrap gap-2">
-            {symptoms.map(({ id, label }) => (
+            {symptoms.map(({ id, label, emoji }) => (
               <button
                 key={id}
                 onClick={() => toggleSymptom(id)}
                 className={cn(
-                  'px-4 py-2 rounded-full text-sm font-medium transition-all',
+                  'px-4 py-2.5 rounded-full text-sm font-medium transition-all',
                   selectedSymptoms.includes(id)
-                    ? 'bg-gradient-pink text-white shadow-sm'
-                    : 'bg-muted/50 text-foreground hover:bg-accent'
+                    ? 'bg-gradient-pink text-white shadow-soft scale-105'
+                    : 'bg-card/60 backdrop-blur-sm text-foreground hover:bg-accent hover:scale-[1.02]'
                 )}
               >
-                {label}
+                {emoji} {label}
               </button>
             ))}
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
-          <h3 className="font-semibold text-foreground mb-4">Anotações</h3>
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
+          <h3 className="font-semibold text-foreground mb-4">📝 Anotações</h3>
           <Textarea
             placeholder="Como você está se sentindo? Anote aqui..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="min-h-[100px] border-0 bg-muted/50"
+            className="min-h-[100px] border-0 bg-muted/50 rounded-xl"
           />
         </Card>
 
@@ -133,7 +137,7 @@ const Symptoms = () => {
           onClick={handleSave}
           className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-14 text-lg font-semibold shadow-soft"
         >
-          Salvar Registro
+          ✨ Salvar Registro
         </Button>
       </div>
       <BottomNav />
