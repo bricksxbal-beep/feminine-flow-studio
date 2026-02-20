@@ -6,8 +6,9 @@ import { Switch } from '@/components/ui/switch';
 import { BottomNav } from '@/components/BottomNav';
 import { storage } from '@/lib/storage';
 import { CycleData } from '@/types/cycle';
-import { Edit, Bell, Trash2, Info } from 'lucide-react';
+import { Edit, Bell, Trash2, Info, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import bgSettings from '@/assets/bg-settings.jpg';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -29,40 +30,49 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-soft pb-24">
-      <div className="max-w-md mx-auto px-6 py-8 space-y-6">
+    <div className="min-h-screen pb-24 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <img src={bgSettings} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+      </div>
+
+      <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
         <div className="text-center animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-xs font-medium text-primary">Personalização</span>
+          </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Configurações
+            Configurações ⚙️
           </h1>
           <p className="text-muted-foreground">
             Personalize seu aplicativo
           </p>
         </div>
 
-        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm animate-slide-up space-y-4">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up space-y-4">
           <h3 className="font-semibold text-foreground mb-4">Dados do Ciclo</h3>
           
           <button
             onClick={() => navigate('/cycle-input')}
-            className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-accent transition-colors"
+            className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-accent/50 transition-all hover:scale-[1.01]"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-pink flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-pink flex items-center justify-center shadow-soft">
                 <Edit className="w-5 h-5 text-white" />
               </div>
-              <span className="text-foreground">Editar Dados do Ciclo</span>
+              <span className="text-foreground font-medium">Editar Dados do Ciclo</span>
             </div>
-            <span className="text-muted-foreground">→</span>
+            <span className="text-muted-foreground text-lg">→</span>
           </button>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm space-y-4">
-          <h3 className="font-semibold text-foreground mb-4">Notificações</h3>
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md space-y-4">
+          <h3 className="font-semibold text-foreground mb-4">🔔 Notificações</h3>
           
-          <div className="flex items-center justify-between p-4 rounded-xl bg-accent/50">
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-accent/30 backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Bell className="w-5 h-5 text-primary" />
               </div>
               <div>
@@ -73,9 +83,9 @@ const Settings = () => {
             <Switch defaultChecked />
           </div>
 
-          <div className="flex items-center justify-between p-4 rounded-xl bg-accent/50">
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-accent/30 backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Bell className="w-5 h-5 text-primary" />
               </div>
               <div>
@@ -87,16 +97,16 @@ const Settings = () => {
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/90 backdrop-blur-sm space-y-4">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md space-y-4">
           <h3 className="font-semibold text-foreground mb-4">Sobre</h3>
           
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-accent/50">
-            <div className="w-10 h-10 rounded-full bg-gradient-pink flex items-center justify-center">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-accent/30 backdrop-blur-sm">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-pink flex items-center justify-center shadow-soft">
               <Info className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-foreground font-medium">BloomPink</p>
-              <p className="text-xs text-muted-foreground">Versão 1.0.0</p>
+              <p className="text-foreground font-medium">BloomPink 🌸</p>
+              <p className="text-xs text-muted-foreground">Versão 1.0.0 • Feito com 💕</p>
             </div>
           </div>
         </Card>
@@ -104,7 +114,7 @@ const Settings = () => {
         <Button
           onClick={handleClearData}
           variant="destructive"
-          className="w-full rounded-full h-12"
+          className="w-full rounded-full h-12 shadow-soft"
         >
           <Trash2 className="w-4 h-4 mr-2" />
           Apagar Todos os Dados

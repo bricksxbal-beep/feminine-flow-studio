@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Sparkles } from 'lucide-react';
 import { storage } from '@/lib/storage';
 import { cn } from '@/lib/utils';
 import onboarding1 from '@/assets/onboarding-1.jpg';
@@ -11,17 +11,17 @@ import onboardingHero from '@/assets/onboarding-hero.jpg';
 const slides = [
   {
     image: onboarding1,
-    title: 'Acompanhe seu Ciclo',
+    title: 'Acompanhe seu Ciclo 🌸',
     description: 'Registre e monitore seu ciclo menstrual de forma simples e intuitiva',
   },
   {
     image: onboarding2,
-    title: 'Preveja sua Ovulação',
+    title: 'Preveja sua Ovulação 💜',
     description: 'Identifique seus dias férteis e planeje sua vida com mais segurança',
   },
   {
     image: onboardingHero,
-    title: 'Cuide de Você',
+    title: 'Cuide de Você 💕',
     description: 'Registre sintomas, humor e tenha controle total da sua saúde feminina',
   },
 ];
@@ -48,20 +48,28 @@ const Onboarding = () => {
     <div className="min-h-screen bg-gradient-soft flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
         <div className="w-full max-w-md animate-fade-in">
-          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-soft mb-8">
+          {/* Brand badge */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-1.5">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-xs font-semibold text-primary tracking-wide">BLOOMPINK</span>
+            </div>
+          </div>
+
+          <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-soft mb-8">
             <img
               src={slides[currentSlide].image}
               alt={slides[currentSlide].title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-all duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           </div>
 
           <div className="text-center space-y-4 mb-8">
             <h1 className="text-3xl font-bold text-foreground">
               {slides[currentSlide].title}
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               {slides[currentSlide].description}
             </p>
           </div>
@@ -71,9 +79,9 @@ const Onboarding = () => {
               <div
                 key={index}
                 className={cn(
-                  'h-2 rounded-full transition-all duration-300',
+                  'h-2 rounded-full transition-all duration-500',
                   index === currentSlide
-                    ? 'w-8 bg-primary'
+                    ? 'w-10 bg-gradient-pink shadow-sm'
                     : 'w-2 bg-border'
                 )}
               />
@@ -87,7 +95,7 @@ const Onboarding = () => {
           onClick={handleNext}
           className="w-full bg-gradient-pink hover:opacity-90 text-white rounded-full h-14 text-lg font-semibold shadow-soft"
         >
-          {currentSlide === slides.length - 1 ? 'Começar' : 'Próximo'}
+          {currentSlide === slides.length - 1 ? '✨ Começar' : 'Próximo'}
           <ChevronRight className="ml-2 w-5 h-5" />
         </Button>
 

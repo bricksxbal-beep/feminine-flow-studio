@@ -63,35 +63,39 @@ const CalendarPage = () => {
     <div className="min-h-screen pb-24 relative overflow-hidden">
       <div className="fixed inset-0 z-0">
         <img src={bgCalendar} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
       </div>
 
       <div className="relative z-10 max-w-md mx-auto px-6 py-8 space-y-6">
         <div className="text-center animate-fade-in">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Calendário</h1>
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-3">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-xs font-medium text-primary">Seu Ciclo</span>
+          </div>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Calendário 📅</h1>
           <p className="text-muted-foreground">Acompanhe seu ciclo menstrual</p>
         </div>
 
-        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md animate-slide-up">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md animate-slide-up">
           <div className="flex items-center justify-between mb-6">
-            <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 hover:bg-accent rounded-xl transition-colors">
+            <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2.5 hover:bg-accent rounded-2xl transition-all hover:scale-105">
               <ChevronLeft className="w-5 h-5 text-foreground" />
             </button>
             <h2 className="text-xl font-semibold text-foreground capitalize">
               {format(currentMonth, 'MMMM yyyy', { locale: ptBR })}
             </h2>
-            <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2 hover:bg-accent rounded-xl transition-colors">
+            <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-2.5 hover:bg-accent rounded-2xl transition-all hover:scale-105">
               <ChevronRight className="w-5 h-5 text-foreground" />
             </button>
           </div>
 
-          <div className="grid grid-cols-7 gap-2 mb-4">
+          <div className="grid grid-cols-7 gap-1.5 mb-3">
             {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day) => (
-              <div key={day} className="text-center text-xs font-medium text-muted-foreground py-2">{day}</div>
+              <div key={day} className="text-center text-[11px] font-semibold text-muted-foreground py-2 uppercase tracking-wider">{day}</div>
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-1.5">
             {Array.from({ length: monthStart.getDay() }).map((_, i) => (
               <div key={`empty-${i}`} />
             ))}
@@ -105,11 +109,11 @@ const CalendarPage = () => {
                   className={cn(
                     'aspect-square flex items-center justify-center rounded-xl text-sm font-medium transition-all',
                     !isCurrentMonth && 'opacity-30',
-                    isToday && 'ring-2 ring-primary ring-offset-2',
+                    isToday && 'ring-2 ring-primary ring-offset-1',
                     dayType === 'period' && 'bg-primary text-primary-foreground shadow-sm',
                     dayType === 'ovulation' && 'bg-secondary text-secondary-foreground shadow-sm',
                     dayType === 'fertile' && 'bg-pink-soft text-foreground',
-                    dayType === 'normal' && 'text-foreground hover:bg-accent'
+                    dayType === 'normal' && 'text-foreground hover:bg-accent/50'
                   )}
                 >
                   {format(date, 'd')}
@@ -119,26 +123,26 @@ const CalendarPage = () => {
           </div>
         </Card>
 
-        <Card className="p-6 shadow-card border-0 bg-card/85 backdrop-blur-md">
+        <Card className="p-6 shadow-card border-0 bg-card/80 backdrop-blur-md">
           <h3 className="font-semibold text-foreground mb-4">Legenda</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-sm">
                 <Droplets className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="text-sm text-foreground">Período Menstrual</span>
+              <span className="text-sm text-foreground font-medium">Período Menstrual</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-secondary flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center shadow-sm">
                 <Sparkles className="w-4 h-4 text-secondary-foreground" />
               </div>
-              <span className="text-sm text-foreground">Dia da Ovulação</span>
+              <span className="text-sm text-foreground font-medium">Dia da Ovulação</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-pink-soft flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-pink-soft flex items-center justify-center">
                 <Heart className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-sm text-foreground">Janela Fértil</span>
+              <span className="text-sm text-foreground font-medium">Janela Fértil</span>
             </div>
           </div>
         </Card>
